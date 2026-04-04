@@ -73,3 +73,16 @@ def analizar_playlist(playlist: list):
     mas_corta = min(playlist, key=lambda x: x["duration_seconds"])
 
     return total_minutos, resto_segundos, mas_larga, mas_corta
+
+def filtrar_spoilers(texto, spoilers):
+    resultado = texto
+    for palabra in spoilers:
+        palabra = palabra.strip()
+        if palabra == "":
+            continue
+        reemplazo = "*" * len(palabra)
+        resultado = resultado.replace(palabra, reemplazo)
+        resultado = resultado.replace(palabra.lower(), reemplazo)
+        resultado = resultado.replace(palabra.upper(), reemplazo)
+        resultado = resultado.replace(palabra.capitalize(), reemplazo)
+    return resultado
