@@ -197,3 +197,46 @@ def cifrar_cesar(texto, desplazamiento):
 def descifrar_cesar(texto_cifrado, desplazamiento):
     # Para descifrar, se invierte el desplazamiento
     return cifrar_cesar(texto_cifrado, -desplazamiento)
+
+def normalizar_registros(students):
+    registros = []
+
+    for alumno in students:
+        nombre = alumno.get("name")
+        nota = alumno.get("grade")
+        estado = alumno.get("status")
+
+        # 1. Eliminar registros con nombre nulo, vacío o solo espacios
+        if not nombre or nombre.strip() == "":
+            continue
+
+        # Normalizar nombre
+        nombre = nombre.strip().title()
+
+        # 2. Eliminar registros con nota nula, vacía o no numérica
+        if nota is None or nota.strip() == "":
+            continue
+        if not nota.isdigit():
+            continue
+
+        nota = int(nota)
+
+        # Normalizar estado
+        estado = estado.strip().title() if estado else "Desconocido"
+
+        registros.append({"name": nombre, "grade": nota, "status": estado})
+
+    # 3. Eliminar duplicados quedándose con la nota más alta
+    final = {}
+    for r in registros:
+        nombre = r["name"]
+        if nombre not in final or r["grade"] > final[nombre]["grade"]:
+            final[nombre] = r
+
+    # Convertir a lista
+    lista_final = list(final.values())
+
+    # 4. Ordenar alfabéticamente
+    lista_final.sort(key=lambda x: x["name"])
+
+    return lista_final
