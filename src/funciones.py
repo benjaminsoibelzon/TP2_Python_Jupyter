@@ -112,3 +112,20 @@ def validar_email(email):
         return False
 
     return True
+
+def calcular_envio(peso, zona):
+    zona = zona.lower()
+
+    # Validar zona
+    if zona not in ["local", "regional", "nacional"]:
+        return None  # señal de zona inválida
+
+    # Determinar costo según peso
+    if peso <= 1:
+        costos = {"local": 500, "regional": 1000, "nacional": 2000}
+    elif peso <= 5:
+        costos = {"local": 1000, "regional": 2500, "nacional": 4500}
+    else:
+        costos = {"local": 2000, "regional": 5000, "nacional": 8000}
+
+    return costos[zona]
