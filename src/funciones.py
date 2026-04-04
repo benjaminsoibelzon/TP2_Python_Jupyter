@@ -145,3 +145,31 @@ def analizar_hashtags(posts):
     trending = {tag: count for tag, count in hashtags.items() if count > 1}
 
     return trending
+
+import random
+
+def sorteo_amigo_invisible(lista_nombres):
+    # Normalizar: quitar espacios y pasar a minúsculas para detectar duplicados
+    nombres_limpios = [n.strip() for n in lista_nombres]
+    nombres_normalizados = [n.lower() for n in nombres_limpios]
+
+    # Validación: al menos 3 participantes
+    if len(nombres_limpios) < 3:
+        return "Error: Debe haber al menos 3 participantes."
+
+    # Validación: duplicados ignorando mayúsculas y espacios
+    if len(nombres_normalizados) != len(set(nombres_normalizados)):
+        return "Error: Hay nombres duplicados (ignorando mayúsculas y espacios)."
+
+    # Crear copia para asignaciones
+    asignados = nombres_limpios.copy()
+
+    # Mezclar hasta que nadie se asigne a sí mismo
+    while True:
+        random.shuffle(asignados)
+        if all(n1 != n2 for n1, n2 in zip(nombres_limpios, asignados)):
+            break
+
+    # Crear diccionario resultado
+    resultado = {n1: n2 for n1, n2 in zip(nombres_limpios, asignados)}
+    return resultado
