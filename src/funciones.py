@@ -173,3 +173,27 @@ def sorteo_amigo_invisible(lista_nombres):
     # Crear diccionario resultado
     resultado = {n1: n2 for n1, n2 in zip(nombres_limpios, asignados)}
     return resultado
+
+def cifrar_cesar(texto, desplazamiento):
+    resultado = ""
+
+    for char in texto:
+        if char.isalpha():
+            # Mayúsculas
+            if char.isupper():
+                base = ord('A')
+            else:
+                base = ord('a')
+
+            # Rotación
+            nueva_pos = (ord(char) - base + desplazamiento) % 26
+            resultado += chr(base + nueva_pos)
+        else:
+            resultado += char  # No se modifica
+
+    return resultado
+
+
+def descifrar_cesar(texto_cifrado, desplazamiento):
+    # Para descifrar, se invierte el desplazamiento
+    return cifrar_cesar(texto_cifrado, -desplazamiento)
