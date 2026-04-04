@@ -129,3 +129,19 @@ def calcular_envio(peso, zona):
         costos = {"local": 2000, "regional": 5000, "nacional": 8000}
 
     return costos[zona]
+
+def analizar_hashtags(posts):
+    hashtags = {}
+
+    for post in posts:
+        palabras = post.split()
+        for palabra in palabras:
+            if palabra.startswith("#"):
+                # Normalizamos por si hay saltos de línea o espacios raros
+                tag = palabra.strip()
+                hashtags[tag] = hashtags.get(tag, 0) + 1
+
+    # Filtrar trending (más de una aparición)
+    trending = {tag: count for tag, count in hashtags.items() if count > 1}
+
+    return trending
