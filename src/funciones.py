@@ -240,3 +240,66 @@ def normalizar_registros(students):
     lista_final.sort(key=lambda x: x["name"])
 
     return lista_final
+
+def competencia_cocina(rounds):
+    participantes = {}
+
+    # Inicializar estructura
+    for ronda in rounds:
+        for nombre in ronda["scores"].keys():
+            if nombre not in participantes:
+                participantes[nombre] = {
+                    "total": 0,
+                    "wins": 0,
+                    "best_round": 0,
+                    "scores": []
+                }
+
+    # Procesar cada ronda
+    for i, ronda in enumerate(rounds, start=1):
+        theme = ronda["theme"]
+        scores = ronda["scores"]
+
+        print(f"Ronda {i} - {theme}:")
+
+        # Calcular puntajes de la ronda
+        puntajes_ronda = {}
+        for nombre, jueces in scores.items():
+            total = sum(jueces.values())
+            puntajes_ronda[nombre] = total
+
+            # Acumular
+            participantes[nombre]["total"] += total
+            participantes[nombre]["scores"].append(total)
+            participantes[nombre]["best_round"] = max(
+                participantes[nombre]["best_round"], total
+            )
+
+        # Determinar ganador
+        ganador = max(puntajes_ronda, key=puntajes_ronda.get)
+        puntos_ganador = puntajes_ronda[ganador]
+        participantes[ganador]["wins"] += 1
+
+        print(f"  Ganador: {ganador} ({puntos_ganador} pts)")
+
+        # Tabla de posiciones de la ronda
+        print("  Tabla de posiciones:")
+        for nombre, pts in sorted(puntajes_ronda.items(), key=lambda x: -x[1]):
+            print(f"   {nombre}: {pts} pts")
+
+        print()
+
+    # Tabla final
+    print("Tabla de posiciones final:")
+    print("Cocinero\tPuntaje\tRondas ganadas\tMejor ronda\tPromedio")
+    print("--------------------------------------------------------------")
+
+    ranking = sorted(participantes.items(), key=lambda x: -x[1]["total"])
+
+    for nombre, datos in ranking:
+        promedio = sum(datos["scores"]) / len(datos["scores"])
+        print(f"{nombre}\t{datos['total']}\t{datos['wins']}\t{datos['best_round']}\t{promedio:.1f}")
+
+    print("--------------------------------------------------------------")
+
+    return ranking
