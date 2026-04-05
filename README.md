@@ -56,3 +56,8 @@ TP2_PYTHON_JUPYTER/
 - Cifrado César  
 - Normalización de registros de alumnos  
 - Simulación de competencia de cocina (puntajes, rondas ganadas, ranking final)
+
+## Datos
+- Benjamin Soibelzon
+- soibelzonben@gmail.com
+- 018832/5
