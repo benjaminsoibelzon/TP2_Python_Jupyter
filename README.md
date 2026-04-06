@@ -61,3 +61,6 @@ TP2_PYTHON_JUPYTER/
 - Benjamin Soibelzon
 - soibelzonben@gmail.com
 - 018832/5
+
+## Link Video Resolucion
+- https://drive.google.com/file/d/1LVCxc-eOtw-ynbjlKzEQADxtaHK4f_gm/view?usp=sharing
